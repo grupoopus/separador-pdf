@@ -4,12 +4,14 @@ import JSZip from 'jszip';
 import * as pdfLib from 'pdf-lib';
 import { saveAs } from 'file-saver';
 import * as pdfjs from 'pdfjs-dist';
+import { Button, Label, Spinner, Text } from '@fluentui/react-components';
 
 pdfjs.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist/build/pdf.worker.min.js'
 
 const Input = () => {
     const [file, setFile] = useState();
     const [zip, setZip] = useState();
+    const [loading, setLoading] = useState(false);
 
     const handleFileChange = event => {
         setFile(event.target.files[0]);
@@ -19,12 +21,13 @@ const Input = () => {
         zip.generateAsync({ type: "blob" })
             .then(function (content) {
                 // Faz o download do arquivo ZIP gerado
-                saveAs(content, "pdf-paginas-separadas.zip");
+                saveAs(content, "pdf-dividos-por-nome.zip");
             });
         setZip(null)
     };
 
     const handleProcessar = async event => {
+        setLoading(true)
         const zip = new JSZip();
 
         const reader = new FileReader();
@@ -64,22 +67,34 @@ const Input = () => {
                     zip.file(`${nomeRecebedor}.pdf`, pdfBytes);
                 }
             })
-            setZip(zip)
+            setTimeout(() => {
+                setZip(zip)
+                setLoading(false);
+            }, 1000);
         }
     }
 
     return (
         <div>
-            <input type="file" accept=".pdf" onChange={handleFileChange} />
+            <Button size="large">
+                <Label for="file-upload" >Upload Arquivo
+                    <input id="file-upload" type="file" accept=".pdf" onChange={handleFileChange} style={{ display: 'none' }} />
+                </Label>
+            </Button>
             {file && (
                 <>
-                    <p>Arquivo selecionado: {file.name}</p>
-                    <button onClick={handleProcessar}>Processar</button>
+                    <div>
+                        <Text>Arquivo selecionado: {file.name}</Text>
+                    </div>
+                    <Button onClick={handleProcessar} size="medium">Processar</Button>
+                    {loading &&
+                        <Spinner label="Processando o arquivo..." />
+                    }
                 </>
             )}
-            {zip && (
+            {zip && !loading && (
                 <>
-                    <button onClick={handleDownload}>Baixar</button>
+                    <Button onClick={handleDownload} size="medium">Download</Button>
                 </>
             )}
         </div>

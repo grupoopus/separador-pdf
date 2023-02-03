@@ -1,18 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import { Subtitle1, Title1, makeStyles } from '@fluentui/react-components';
 import Input from './Components/Input';
+
+const styles = makeStyles({
+  root: {
+    display: 'flex',
+  },
+})
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Divisor de PDF
-        </p>
-          {Input()}
-      </header>
-    </div>
+    <div>
+      <div className={styles.root}></div>
+      <Title1 align="center">Divisor PDF</Title1>
+      {Input()}
+    </div >
   );
 }
 
