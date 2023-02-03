@@ -1,4 +1,4 @@
-import { Subtitle1, Title1, makeStyles } from '@fluentui/react-components';
+import { Title1, makeStyles } from '@fluentui/react-components';
 import Input from './Components/Input';
 
 const styles = makeStyles({
