@@ -45,26 +45,30 @@ const Input = () => {
                     //Encontrar nome ou nome recebedor
                     const target = ['Nome:', 'nome do recebedor:'];
 
-                    await pdf.getPage(i + 1).then(async (page) => {
-                        const content = (await page.getTextContent()).items
-                        const index = content.findIndex(obj => target.includes(obj.str))
-                        nomeRecebedor = content[index + 2].str
-                    })
+                    try {
+                        await pdf.getPage(i + 1).then(async (page) => {
+                            const content = (await page.getTextContent()).items
+                            const index = content.findIndex(obj => target.includes(obj.str))
+                            nomeRecebedor = content[index + 2].str
+                        })
+                    } catch (error) {
 
-                    // Crie um novo documento PDF
-                    const newPdfDoc = await pdfLib.PDFDocument.create();
+                    } finally {
+                        // Crie um novo documento PDF
+                        const newPdfDoc = await pdfLib.PDFDocument.create();
 
-                    // Copia a página atual para o novo documento PDF
-                    const [firstDonorPage] = await newPdfDoc.copyPages(pdfDoc, [i]);
-                    newPdfDoc.insertPage(0, firstDonorPage)
+                        // Copia a página atual para o novo documento PDF
+                        const [firstDonorPage] = await newPdfDoc.copyPages(pdfDoc, [i]);
+                        newPdfDoc.insertPage(0, firstDonorPage)
 
 
-                    // Salve o novo documento PDF em um arquivo
-                    const pdfBytes = await newPdfDoc.save();
+                        // Salve o novo documento PDF em um arquivo
+                        const pdfBytes = await newPdfDoc.save();
 
-                    // Adicione a página atual ao arquivo ZIP como um novo arquivo
-                    console.log(nomeRecebedor)
-                    zip.file(`${nomeRecebedor}.pdf`, pdfBytes);
+                        // Adicione a página atual ao arquivo ZIP como um novo arquivo
+                        console.log(nomeRecebedor)
+                        zip.file(`${nomeRecebedor}.pdf`, pdfBytes);
+                    }
                 }
             })
             setTimeout(() => {
