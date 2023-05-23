@@ -3,21 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fluentui/react-components": "^9.13.0",
+    "@fluentui/react-components": "^9.20.2",
     "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.4.3",
     "file-save": "^0.2.0",
     "file-saver": "^2.0.5",
     "jszip": "^3.10.1",
     "pdf-lib": "^1.17.1",
     "pdf-parse": "^1.1.1",
-    "pdfjs-dist": "^3.3.122",
+    "pdfjs-dist": "^3.6.172",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-script": "^2.0.5",
     "react-scripts": "^5.0.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^3.3.1"
   },
   "scripts": {
     "start": "react-scripts start",
